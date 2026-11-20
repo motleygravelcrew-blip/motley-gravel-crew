@@ -1,21 +1,21 @@
 {
-  "edition": "001",
+  "edition": "—",
   "title": "The cycling world, in one briefing.",
-  "summary": "A daily scan of the stories, racing, results and technology shaping road, gravel, XCO and XCM. Built for curious riders, not just specialists.",
+  "summary": "A concise daily overview of the important stories, racing, results and technology shaping cycling locally, nationally and internationally.",
   "lead": {
-    "title": "Today's biggest cycling story",
-    "summary": "Add a verified lead story here. Summarise what happened, why it matters to riders, and link directly to the original publisher.",
-    "url": "#"
+    "title": "The first edition is being prepared.",
+    "summary": "The latest verified lead story will appear here, with context and a link to the original source.",
+    "url": "#news"
   },
   "results": {
-    "title": "Racing watch",
-    "summary": "Add the latest race reports, podiums, standings and key results across road, gravel, XCO and XCM.",
-    "url": "#"
+    "title": "Racing across every discipline",
+    "summary": "Previews, podiums, standings and key results from road, gravel, XCO and XCM.",
+    "url": "#racing"
   },
   "technology": {
     "title": "What's changing in cycling?",
-    "summary": "Add new bike launches, components, equipment, product announcements and useful technology explained.",
-    "url": "#"
+    "summary": "New bikes, components, equipment and technology explained for riders.",
+    "url": "#technology"
   },
-  "editorNote": "This is a starter edition layout, not a live news feed. Each daily edition should be updated with dated, verified stories and links to original sources."
+  "editorNote": "Every edition will prioritise verified information, original source links and context explaining why each story matters."
 }
