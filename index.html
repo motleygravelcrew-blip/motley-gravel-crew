@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070912">
+  <meta name="description" content="Motley Gravel Crew — daily cycling news, race results, technology and community for road, gravel, XCO and XCM riders.">
+  <title>Motley Gravel Crew | One crew. Every ride.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="topline"><span>WESTERN AUSTRALIA</span><span id="today">MGC DAILY CYCLING BRIEF</span><span>ONE CREW. EVERY RIDE.</span></div>
+  <header class="site-header">
+    <a class="brand" href="#home" aria-label="Motley Gravel Crew home">
+      <span class="brand-mark">MGC</span>
+      <span class="brand-name">MOTLEY GRAVEL <b>CREW</b></span>
+    </a>
+    <button class="menu-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+    <nav id="nav">
+      <a href="#brief">DAILY BRIEF</a><a href="#disciplines">DISCIPLINES</a><a href="#technology">TECH</a><a href="#community">COMMUNITY</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <img src="assets/mgc-hero-banner.jpg" alt="Motley Gravel Crew neon cycling banner with cyclists and MGC branding">
+      <div class="hero-overlay">
+        <p class="eyebrow"><span class="pulse"></span> THE DAILY CYCLING INTELLIGENCE BRIEF</p>
+        <h1>THE RIDE DOESN'T<br><em>STOP HERE.</em></h1>
+        <p class="hero-copy">Road. Gravel. Cross-country. Marathon MTB.<br>News, racing, results and technology — all in one place.</p>
+        <a class="button button-gradient" href="#brief">READ TODAY'S BRIEF <span>↘</span></a>
+      </div>
+    </section>
+
+    <section class="ticker" aria-label="MGC coverage">
+      <div>ROAD <i>✦</i> GRAVEL <i>✦</i> XCO <i>✦</i> XCM <i>✦</i> NEWS <i>✦</i> RESULTS <i>✦</i> TECHNOLOGY <i>✦</i> COMMUNITY <i>✦</i></div>
+    </section>
+
+    <section class="section brief-section" id="brief">
+      <div class="section-heading">
+        <div><p class="eyebrow">YOUR DAILY RIDE READ</p><h2>THE <span class="gradient-text">DAILY BRIEF</span></h2></div>
+        <div class="date-stamp"><span class="live-dot"></span><span id="brief-date">LATEST EDITION</span></div>
+      </div>
+      <div class="brief-intro">
+        <div><span class="edition-label">MGC INTELLIGENCE / EDITION <b id="edition">001</b></span><h3 id="brief-title">The cycling world, in one briefing.</h3></div>
+        <p id="brief-summary">A daily scan of the stories, racing, results and technology shaping road, gravel, XCO and XCM. Built for curious riders, not just specialists.</p>
+      </div>
+      <div class="brief-grid">
+        <article class="brief-card feature-card">
+          <div class="card-top"><span class="category cyan">TOP STORY</span><span class="card-index">01 / LEAD</span></div>
+          <h3 id="lead-title">Today's biggest cycling story</h3>
+          <p id="lead-text">The lead story will appear here with a concise summary, why it matters and a link to the original source.</p>
+          <a id="lead-link" class="text-link" href="#community">READ THE STORY <span>↗</span></a>
+        </article>
+        <article class="brief-card">
+          <div class="card-top"><span class="category purple">RACE & RESULTS</span><span class="card-index">02</span></div>
+          <h3 id="results-title">Racing watch</h3><p id="results-text">Race reports, podiums, standings and key results across the four disciplines.</p>
+          <a id="results-link" class="text-link" href="#disciplines">VIEW RESULTS <span>↗</span></a>
+        </article>
+        <article class="brief-card">
+          <div class="card-top"><span class="category blue">TECH & GEAR</span><span class="card-index">03</span></div>
+          <h3 id="tech-title">What's changing in cycling?</h3><p id="tech-text">New bikes, components, equipment, product launches and useful technology explained.</p>
+          <a id="tech-link" class="text-link" href="#technology">EXPLORE TECH <span>↗</span></a>
+        </article>
+      </div>
+      <div class="discipline-strip" id="disciplines">
+        <div><span class="discipline-icon">R</span><span><b>ROAD</b><small>WorldTour, classics, stage racing</small></span></div>
+        <div><span class="discipline-icon">G</span><span><b>GRAVEL</b><small>Gravel racing, adventure, events</small></span></div>
+        <div><span class="discipline-icon">X</span><span><b>XCO</b><small>Cross-country Olympic MTB</small></span></div>
+        <div><span class="discipline-icon">M</span><span><b>XCM</b><small>Marathon mountain biking</small></span></div>
+      </div>
+      <div class="brief-footer"><span>EDITOR'S NOTE</span><p id="editor-note">The daily edition is designed to be updated with verified stories and original source links. Check dates and event time zones when following race coverage.</p></div>
+    </section>
+
+    <section class="section split-section" id="technology">
+      <div class="split-copy">
+        <p class="eyebrow">BEYOND THE PELOTON</p>
+        <h2>GEAR. DATA.<br><span class="gradient-text">INNOVATION.</span></h2>
+        <p>From drivetrain developments and tyre tech to power meters, GPS, training platforms and the latest bikes — understand what is new and what it means for riders.</p>
+        <a class="button button-outline" href="#brief">LATEST TECHNOLOGY <span>↗</span></a>
+      </div>
+      <div class="tech-visual">
+        <div class="tech-orbit orbit-one"></div><div class="tech-orbit orbit-two"></div>
+        <div class="tech-core"><span>RIDE</span><b>SMARTER</b><small>MGC / TECH DESK</small></div>
+        <span class="tech-tag tag-a">COMPONENTS</span><span class="tech-tag tag-b">TRAINING DATA</span><span class="tech-tag tag-c">BIKE TECH</span>
+      </div>
+    </section>
+
+    <section class="section community-section" id="community">
+      <div class="community-panel">
+        <p class="eyebrow">MORE THAN A NEWS FEED</p>
+        <h2>FIND YOUR<br><span class="gradient-text">PEOPLE.</span></h2>
+        <p>Different bikes. Different speeds. Same love of riding. Join the Motley Gravel Crew community and connect with riders across road, gravel and mountain biking.</p>
+        <div class="community-actions">
+          <a class="button button-gradient social-link" id="facebook-link" href="#" target="_blank" rel="noopener">FACEBOOK GROUP <span>↗</span></a>
+          <a class="button button-outline social-link" id="strava-link" href="#" target="_blank" rel="noopener">STRAVA CLUB <span>↗</span></a>
+        </div>
+        <small class="link-note" id="link-note">Community links will be connected before launch.</small>
+      </div>
+      <div class="community-side"><div class="big-mgc">MGC<span>+</span></div><p>ONE CREW.<br>EVERY RIDE.</p><div class="side-lines"></div></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-brand"><span class="brand-mark">MGC</span><span>MOTLEY GRAVEL CREW</span></div>
+    <p>Road • Gravel • XCO • XCM</p><p class="copyright">© <span id="year"></span> Motley Gravel Crew · Western Australia</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
