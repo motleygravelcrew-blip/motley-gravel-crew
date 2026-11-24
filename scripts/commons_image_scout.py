@@ -209,7 +209,7 @@ def main():
         time.sleep(1.2)
     (OUT / "approved-images.json").write_text(
         json.dumps({"updated_utc": datetime.now(timezone.utc).isoformat(), "images": approved},
-                   ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+                   ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {len(ordered)} candidates and refreshed {len(approved)} approved website images.")
 
 
