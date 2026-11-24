@@ -52,7 +52,7 @@ for path in sorted(ROOT.glob("20??-??-??.html"), reverse=True):
         continue
     parser = EditionParser()
     parser.feed(path.read_text(encoding="utf-8"))
-    title = parser.title.strip() or f"MGC Cycling Edition — {published:%d %B %Y}"
+    title = parser.title.strip() or f"MGC Cycling Intelligence — The Intelligence Edition — {published:%d %B %Y}"
     summary = " ".join(parser.summary_parts).strip()
     if not summary:
         summary = "Read the latest Motley Gravel Crew cycling intelligence edition."
