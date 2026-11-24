@@ -191,6 +191,39 @@ def main():
         # Insert image immediately after the matching story heading.
         doc = doc.replace(heading_html, heading_html + figure, 1)
     edition.write_text(doc, encoding="utf-8")
+
+    # Keep the homepage lead panel in sync with the first approved image/story.
+    _, lead_heading_html, lead_figure = selected[0]
+    lead_heading = clean_text(re.sub(r"<.*?>", " ", lead_heading_html))
+    lead_asset_match = re.search(r'<img src="([^"]+)" alt="([^"]*)"', lead_figure)
+    lead_credit_match = re.search(r"<figcaption>(.*?)</figcaption>", lead_figure, re.S)
+    if lead_asset_match:
+        homepage = ROOT / "index.html"
+        if homepage.exists():
+            home = homepage.read_text(encoding="utf-8")
+            image_src, image_alt = lead_asset_match.group(1), lead_asset_match.group(2)
+            credit_html = lead_credit_match.group(1) if lead_credit_match else "Image credit and licence verified"
+            lead_date = date.fromisoformat(edition.stem).strftime("%d %B %Y").upper()
+            panel = (
+                '<div class="feature-panel"><div class="feature-image-wrap">'
+                f'<img class="lead-story-image" src="{image_src}" alt="{html.escape(image_alt, quote=True)}">'
+                f'<small>{credit_html}</small></div><div>'
+                f'<span class="category cyan">{lead_date} · LEAD STORY</span>'
+                f'<h3>{html.escape(lead_heading)}</h3>'
+                f'<p>Selected lead story from the latest MGC Cycling Intelligence briefing.</p>'
+                f'<a class="text-link" href="{edition.name}">READ TODAY\\'S BRIEF <span>↗</span></a>'
+                '</div></div>'
+            )
+            home, count = re.subn(
+                r'<div class="feature-panel">.*?</div></div>',
+                lambda _: panel, home, count=1, flags=re.S
+            )
+            if count:
+                homepage.write_text(home, encoding="utf-8")
+                print("Updated homepage lead image and headline.")
+            else:
+                print("Homepage feature panel not found; article images were still published.")
+
     print(f"Inserted {len(selected)} verified image(s) into {edition.name}.")
 
 if __name__ == "__main__":
