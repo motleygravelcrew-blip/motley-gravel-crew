@@ -45,3 +45,9 @@ The current MGC site is a static website. This policy prepares the editorial sta
 
 ## Display
 Use wide editorial crops for lead stories and responsive image cards for supporting stories. Keep image credits readable and visible. Use modern responsive formats such as WebP or AVIF when the publishing pipeline can preserve the original and its licence record.
+
+
+## Wikimedia Commons discovery automation
+The draft repository now includes a GitHub Actions image scout at `.github/workflows/commons-image-scout.yml` and `scripts/commons_image_scout.py`. It searches cycling-related subjects and writes a review-only candidate catalogue to `image-library/commons-candidates.json` and `image-library/commons-candidates.md`.
+
+The scout reads per-file `imageinfo/extmetadata` fields for the licence and creator. It filters out missing creator/licence data and known restrictive licence labels, but metadata extraction is not a legal guarantee and can be incomplete or unreliable for multi-licensed files. Every candidate therefore remains marked **REVIEW REQUIRED** and is not automatically displayed or published. See the [Commons machine-readable metadata guidance](https://commons.wikimedia.org/wiki/Commons:Machine-readable_data) and [Commons licensing policy](https://commons.wikimedia.org/wiki/Commons:Licensing).
