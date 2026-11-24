@@ -219,7 +219,7 @@ figure.story-feature-image figcaption{max-width:100%;overflow-wrap:anywhere}
             panel = (
                 '<div class="feature-panel"><div class="feature-image-wrap">'
                 f'<img class="lead-story-image" src="{image_src}" alt="{html.escape(image_alt, quote=True)}">'
-                f'<small>{credit_html}</small></div><div>'
+                f'<small style="display:block;font-size:9px;line-height:1.35;color:#748198;opacity:.72">{credit_html}</small></div><div>'
                 f'<span class="category cyan">{lead_date} · LEAD STORY</span>'
                 f'<h3>{html.escape(lead_heading)}</h3>'
                 f'<p>Selected lead story from the latest MGC Cycling Intelligence briefing.</p>'
