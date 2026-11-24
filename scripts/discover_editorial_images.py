@@ -190,6 +190,18 @@ def main():
     for _, heading_html, figure in reversed(selected):
         # Insert image immediately after the matching story heading.
         doc = doc.replace(heading_html, heading_html + figure, 1)
+    # Every dated briefing has its own inline stylesheet, so add containment there too.
+    if "Keep all story images inside the article column" not in doc:
+        safe_image_css = """
+/* Keep all story images inside the article column */
+article img, figure, figure img{box-sizing:border-box;max-width:100%}
+figure.story-feature-image{display:block;width:100%;max-width:100%;height:auto;margin:22px 0 28px;overflow:hidden}
+figure.story-feature-image img{display:block;width:100%;max-width:100%;height:clamp(160px,32vw,300px);max-height:300px;object-fit:contain;object-position:center;background:#101525;border:1px solid #26314b;border-radius:10px}
+figure.story-feature-image figcaption{max-width:100%;overflow-wrap:anywhere}
+@media(max-width:600px){figure.story-feature-image img{height:210px;max-height:210px}}
+"""
+        doc = doc.replace("</style>", safe_image_css + "</style>", 1)
+
     edition.write_text(doc, encoding="utf-8")
 
     # Keep the homepage lead panel in sync with the first approved image/story.
