@@ -25,6 +25,34 @@ QUERIES = [
     "cycling Western Australia",
 ]
 PER_QUERY = 8
+APPROVED_FILE_TITLES = [
+    "File:Gravel bike race in southeast Oregon (28438800417).jpg",
+    "File:Cyclist on gravel bike descending Eldridge Grade.jpg",
+    "File:Gravel-bike-fitted-with-aerobars-for-racing.jpg",
+]
+APPROVED_REVIEW = {
+    "File:Gravel bike race in southeast Oregon (28438800417).jpg": {
+        "editorial_title": "Gravel racing",
+        "editorial_caption": "Riders competing in the Skull 120/60/30 off-road race in southeast Oregon, 16 June 2018. Illustrative gravel-racing photography, not a current event image.",
+        "reviewed_creator": "BLM Oregon & Washington",
+        "reviewed_licence": "CC BY 2.0",
+        "licence_url": "https://creativecommons.org/licenses/by/2.0/",
+    },
+    "File:Cyclist on gravel bike descending Eldridge Grade.jpg": {
+        "editorial_title": "Gravel riding",
+        "editorial_caption": "A cyclist descending Eldridge Grade on a gravel bike. Illustrative cycling photography.",
+        "reviewed_creator": "Drakepirates",
+        "reviewed_licence": "CC BY-SA 4.0",
+        "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    },
+    "File:Gravel-bike-fitted-with-aerobars-for-racing.jpg": {
+        "editorial_title": "Gravel equipment",
+        "editorial_caption": "A gravel bike fitted with clip-on aerobars for racing. Illustrative equipment photography.",
+        "reviewed_creator": "Jeff Dieffenbach",
+        "reviewed_licence": "CC BY 4.0",
+        "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+    },
+}
 OUT = Path("image-library")
 OUT.mkdir(exist_ok=True)
 
@@ -142,7 +170,47 @@ def main():
             "",
         ]
     (OUT / "commons-candidates.md").write_text("\n".join(lines), encoding="utf-8")
-    print(f"Wrote {len(ordered)} Wikimedia Commons candidates.")
+    # Refresh the small, human-reviewed allow-list used by the live website.
+    approved = []
+    for title in APPROVED_FILE_TITLES:
+        data = api({
+            "action": "query", "titles": title, "prop": "imageinfo",
+            "iiprop": "url|extmetadata", "iiurlwidth": 1200,
+            "format": "json", "formatversion": 2,
+        })
+        pages = data.get("query", {}).get("pages", [])
+        if not pages or pages[0].get("missing"):
+            continue
+        info = (pages[0].get("imageinfo") or [{}])[0]
+        meta = info.get("extmetadata") or {}
+        actual_creator = plain(meta.get("Artist"))
+        actual_licence = plain(meta.get("LicenseShortName"))
+        review = APPROVED_REVIEW[title]
+        # Fail closed if the live Commons metadata no longer matches the reviewed record.
+        if (not actual_creator or not actual_licence or
+            actual_creator != review["reviewed_creator"] or
+            actual_licence != review["reviewed_licence"] or
+            not permitted(actual_licence)):
+            print(f"Skipping {title}: Commons metadata differs from reviewed allow-list.", file=sys.stderr)
+            continue
+        if not info.get("thumburl") or not info.get("descriptionurl"):
+            continue
+        approved.append({
+            "file": title,
+            "preview_url": info["thumburl"],
+            "source_page": info["descriptionurl"],
+            "creator": actual_creator,
+            "licence": actual_licence,
+            "licence_url": review["licence_url"],
+            "editorial_title": review["editorial_title"],
+            "editorial_caption": review["editorial_caption"],
+            "alt": review["editorial_title"] + " — Wikimedia Commons photograph",
+        })
+        time.sleep(1.2)
+    (OUT / "approved-images.json").write_text(
+        json.dumps({"updated_utc": datetime.now(timezone.utc).isoformat(), "images": approved},
+                   ensure_ascii=False, indent=2) + "\\n", encoding="utf-8")
+    print(f"Wrote {len(ordered)} candidates and refreshed {len(approved)} approved website images.")
 
 
 if __name__ == "__main__":
