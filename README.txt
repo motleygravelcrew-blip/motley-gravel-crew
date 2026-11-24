@@ -11,10 +11,11 @@ PAGES
 - 2026-11-21.html and 2026-11-22.html: existing dated editions
 
 SHARED FILES
-- styles.css: shared responsive visual system
+- styles.css: shared responsive visual system and refreshed editorial image-card styles
 - script.js: mobile navigation and footer year
 - config.json: official Facebook and Strava links
 - assets/mgc-hero-banner.jpg: approved MGC banner
+- IMAGE-LICENSING.md: approved image sources, reuse checks, attribution and future automation requirements
 
 EDITORIAL SCHEDULE
 Monday and Thursday, 6:00 am Australia/Perth.
