@@ -1,0 +1,39 @@
+name: MGC Wikimedia image scout
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 21 * * 0"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mgc-wikimedia-image-scout
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: site-rebuild-2026-11
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Search Wikimedia Commons and verify machine-readable licence fields
+        run: python scripts/commons_image_scout.py
+      - name: Commit candidate catalogue
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add image-library/commons-candidates.json image-library/commons-candidates.md
+          if git diff --cached --quiet; then
+            echo "No candidate catalogue changes."
+          else
+            git commit -m "Refresh Wikimedia Commons image candidates"
+            git push origin HEAD:site-rebuild-2026-11
+          fi
