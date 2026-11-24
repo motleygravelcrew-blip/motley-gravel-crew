@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Motley Gravel Crew — Cycling Intelligence</title>
+    <link>https://motleygravelcrew.com/</link>
+    <description>Independent cycling journalism covering gravel, road, XCO/XCM, technology and the Western Australian cycling community.</description>
+    <language>en-au</language>
+    <managingEditor>editor@motleygravelcrew.com (Motley Gravel Crew)</managingEditor>
+    <webMaster>editor@motleygravelcrew.com (Motley Gravel Crew)</webMaster>
+    <atom:link href="https://motleygravelcrew.com/feed.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>MGC Daily Cycling Intelligence — 22 November 2026</title>
+      <link>https://motleygravelcrew.com/2026-11-22.html</link>
+      <guid isPermaLink="true">https://motleygravelcrew.com/2026-11-22.html</guid>
+      <pubDate>Sun, 22 Nov 2026 06:00:00 +0800</pubDate>
+      <description><![CDATA[The latest MGC cycling briefing: professional road cycling's new Collective Cycling Group, the 2027 Santos Tour Down Under format, mountain biking, technology and Western Australian cycling.]]></description>
+      <category>Road</category>
+      <category>Gravel</category>
+      <category>Western Australia</category>
+    </item>
+    <item>
+      <title>MGC Daily Cycling Intelligence — 21 November 2026</title>
+      <link>https://motleygravelcrew.com/2026-11-21.html</link>
+      <guid isPermaLink="true">https://motleygravelcrew.com/2026-11-21.html</guid>
+      <pubDate>Sat, 21 Nov 2026 06:00:00 +0800</pubDate>
+      <description><![CDATA[The MGC cycling briefing covering the 2027 gravel qualification season, professional road cycling developments, cycling technology and the Western Australian club-racing calendar.]]></description>
+      <category>Road</category>
+      <category>Gravel</category>
+      <category>Western Australia</category>
+    </item>
+  </channel>
+</rss>
