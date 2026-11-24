@@ -1,0 +1,36 @@
+{
+  "title": "MGC Cycling Image Library",
+  "updated": "Generated weekly from Wikimedia Commons metadata",
+  "images": [
+    {
+      "file": "File:Gravel bike race in southeast Oregon (28438800417).jpg",
+      "editorial_title": "Gravel racing",
+      "editorial_caption": "Riders competing in the Skull 120/60/30 off-road race in southeast Oregon, 16 June 2018. This is an illustrative gravel-racing photograph, not a current event image.",
+      "reviewed_source": "https://commons.wikimedia.org/wiki/File:Gravel_bike_race_in_southeast_Oregon_(28438800417).jpg",
+      "reviewed_creator": "BLM Oregon & Washington",
+      "reviewed_licence": "CC BY 2.0",
+      "licence_url": "https://creativecommons.org/licenses/by/2.0/",
+      "preview_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gravel_bike_race_in_southeast_Oregon_(28438800417).jpg?width=1200"
+    },
+    {
+      "file": "File:Cyclist on gravel bike descending Eldridge Grade.jpg",
+      "editorial_title": "Gravel riding",
+      "editorial_caption": "A cyclist descending Eldridge Grade on a gravel bike. Illustrative cycling photography.",
+      "reviewed_source": "https://commons.wikimedia.org/wiki/File:Cyclist_on_gravel_bike_descending_Eldridge_Grade.jpg",
+      "reviewed_creator": "Drakepirates",
+      "reviewed_licence": "CC BY-SA 4.0",
+      "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "preview_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclist_on_gravel_bike_descending_Eldridge_Grade.jpg?width=1200"
+    },
+    {
+      "file": "File:Gravel-bike-fitted-with-aerobars-for-racing.jpg",
+      "editorial_title": "Gravel equipment",
+      "editorial_caption": "A gravel bike fitted with clip-on aerobars for racing. Illustrative equipment photography.",
+      "reviewed_source": "https://commons.wikimedia.org/wiki/File:Gravel-bike-fitted-with-aerobars-for-racing.jpg",
+      "reviewed_creator": "Jeff Dieffenbach",
+      "reviewed_licence": "CC BY 4.0",
+      "licence_url": "https://creativecommons.org/licenses/by/4.0/",
+      "preview_url": "https://commons.wikimedia.org/wiki/Special:FilePath/Gravel-bike-fitted-with-aerobars-for-racing.jpg?width=1200"
+    }
+  ]
+}

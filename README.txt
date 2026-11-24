@@ -1,24 +1,27 @@
-MOTLEY GRAVEL CREW — WEBSITE STARTER
+MOTLEY GRAVEL CREW — WEBSITE
 
-This is the first editorial website structure for Motley Gravel Crew.
+Static website hosted through GitHub and Cloudflare Pages.
 
-FILES
-- index.html: single-page publication homepage and section layout
-- styles.css: visual styling and responsive layout
-- script.js: mobile navigation, date and brief/config loading
-- brief.json: content data for the daily brief feature
-- config.json: MGC community links
-- assets/mgc-hero-banner.jpg: approved MGC hero banner
+PAGES
+- index.html: homepage
+- editions.html: Monday and Thursday editions
+- archive.html: dated archive
+- routes.html: community Strava route information and submission route
+- about.html: publication purpose and editorial standards
+- 2026-11-21.html and 2026-11-22.html: existing dated editions
 
-HOSTING
-Designed for a free static deployment using GitHub and Cloudflare Pages.
-Cloudflare Pages settings: framework preset None, build command blank, output directory /.
+SHARED FILES
+- styles.css: shared responsive visual system and refreshed editorial image-card styles
+- script.js: mobile navigation and footer year
+- config.json: official Facebook and Strava links
+- assets/mgc-hero-banner.jpg: approved MGC banner
+- IMAGE-LICENSING.md: approved image sources, reuse checks, attribution and future automation requirements
 
-UPDATING THE DAILY BRIEF
-The brief feature reads brief.json. Replace its placeholder text with reviewed and approved edition details when ready. Do not publish unverified claims. For a permanent dated archive, add a dated edition page/file and link it from the archive section as that feature is developed.
+EDITORIAL SCHEDULE
+Monday and Thursday, 6:00 am Australia/Perth.
 
-COMMUNITY LINKS
-The current Facebook and Strava destinations are stored in config.json.
+ROUTE SUBMISSIONS
+Until a dedicated form backend is configured, followers submit public Strava route links through the MGC Facebook page. MGC reviews routes before listing them.
 
-IMPORTANT
-This is an editorial foundation, not a fully automated publishing system. The live website is not changed by editing these local files. Upload the updated project files to the connected GitHub repository when ready; Cloudflare Pages will then deploy the commit.
+DEPLOYMENT
+Cloudflare Pages is connected to this GitHub repository. Commits to main should trigger a deployment. This website rebuild is prepared on a separate branch for review before publication.
