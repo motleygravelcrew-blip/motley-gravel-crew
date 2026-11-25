@@ -1,37 +1,22 @@
-name: MGC automatic editorial image discovery
+name: MGC editorial image discovery (manual review only)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '20??-??-??.html'
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: mgc-editorial-images
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  discover-and-publish-images:
+  discover-for-review:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out latest edition
+      - name: Check out approved content
         uses: actions/checkout@v4
-        with:
-          ref: main
-      - name: Discover, verify and download licensed images
+      - name: Discover and validate candidate images
         run: python3 scripts/discover_editorial_images.py
-      - name: Commit approved image assets and article placements
+      - name: Report candidate changes without publishing
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/editorial 20??-??-??.html
-          if git diff --cached --quiet; then
-            echo "No images passed the automated checks; no image changes to publish."
-          else
-            git commit -m "Add automatically verified editorial images"
-            git push origin main
+          if git status --short; then
+            echo "Any generated image or article changes are review candidates only."
+            echo "This workflow has read-only repository permissions and cannot publish them."
           fi
