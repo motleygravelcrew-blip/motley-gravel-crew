@@ -1,0 +1,50 @@
+name: Publish MGC editorial indexes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '20??-??-??.html'
+      - 'scripts/build_editorial_indexes.py'
+      - 'scripts/build_rss_feed.py'
+      - '.github/workflows/publish-editorial-indexes.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mgc-editorial-publishing
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish-indexes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out approved main-branch content
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Build RSS feed
+        run: python3 scripts/build_rss_feed.py
+      - name: Build homepage, editions, archive and sitemap
+        run: python3 scripts/build_editorial_indexes.py
+      - name: Validate generated XML
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          ET.parse("feed.xml")
+          ET.parse("sitemap.xml")
+          print("RSS and sitemap XML are valid.")
+          PY
+      - name: Commit generated publication indexes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add feed.xml sitemap.xml index.html editions.html archive.html
+          if git diff --cached --quiet; then
+            echo "Publication indexes are already current."
+          else
+            git commit -m "Publish MGC editorial indexes"
+            git push origin main
+          fi
