@@ -2,6 +2,7 @@
 """Build all MGC editorial indexes from approved dated edition pages."""
 from datetime import date, datetime
 from html.parser import HTMLParser
+from html import escape
 from pathlib import Path
 from zoneinfo import ZoneInfo
 from xml.etree.ElementTree import Element, SubElement, ElementTree
@@ -61,7 +62,7 @@ def editions():
             "href": path.name,
             "date_label": published.strftime("%d %B %Y").upper(),
             "month_label": published.strftime("%B %Y").upper(),
-            "summary": summary[:260],
+            "summary": escape(summary[:260], quote=False),
         })
     return result
 
@@ -104,7 +105,7 @@ def build_sitemap(items):
         loc = SITE + ("/" if not page else "/" + page)
         node = SubElement(root, "url")
         SubElement(node, "loc").text = loc
-        SubElement(node, "lastmod").text = today if loc not in existing else today
+        SubElement(node, "lastmod").text = today
     for item in items:
         node = SubElement(root, "url")
         SubElement(node, "loc").text = SITE + "/" + item["href"]
