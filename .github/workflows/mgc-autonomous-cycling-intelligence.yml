@@ -1,10 +1,14 @@
 name: MGC Autonomous Cycling Intelligence
 
 on:
-  # 22:00 UTC Sunday/Wednesday is 06:00 Monday/Thursday in Perth (AWST).
   schedule:
-    - cron: '0 22 * * 0,3'
+    - cron: '0 22 * * 0,3' # 06:00 AWST Monday and Thursday
   workflow_dispatch:
+    inputs:
+      test_date:
+        description: "For a development-branch test only, enter a future ISO date (YYYY-MM-DD)"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -15,65 +19,84 @@ concurrency:
 
 jobs:
   research-validate-publish:
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
-      - name: Check out current publication
+      - name: Check out selected branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: ${{ github.ref }}
           fetch-depth: 0
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
+      - name: Create isolated publication workspace
+        run: |
+          mkdir -p "$RUNNER_TEMP/mgc-publication-test"
+          tar --exclude='./.git' -cf - . | tar -xf - -C "$RUNNER_TEMP/mgc-publication-test"
       - name: Generate source-backed edition
+        working-directory: ${{ runner.temp }}/mgc-publication-test
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           MGC_OPENAI_MODEL: ${{ vars.MGC_OPENAI_MODEL }}
+          MGC_EDITION_DATE: ${{ inputs.test_date }}
         run: python3 scripts/generate_cycling_intelligence.py
-
-      - name: Regenerate publication indexes
+      - name: Regenerate publication indexes in isolated workspace
+        working-directory: ${{ runner.temp }}/mgc-publication-test
         run: python3 scripts/build_publication_index.py
-
-      - name: Validate candidate edition and all publication outputs
+      - name: Validate article, citations and publication outputs
+        working-directory: ${{ runner.temp }}/mgc-publication-test
         run: |
           python3 -m py_compile scripts/generate_cycling_intelligence.py scripts/build_publication_index.py scripts/build_rss_feed.py
           python3 - <<'PY'
           from pathlib import Path
-          from html.parser import HTMLParser
           from xml.etree import ElementTree as ET
           import re
           root = Path(".")
-          candidates = sorted(root.glob("20??-??-??.html"), reverse=True)
-          if not candidates:
+          editions = sorted(root.glob("20??-??-??.html"), reverse=True)
+          if not editions:
               raise SystemExit("No dated edition exists.")
-          edition = candidates[0]
+          edition = editions[0]
           doc = edition.read_text(encoding="utf-8")
           if "<title>" not in doc or "<article>" not in doc or "EDITORIAL CHECK" not in doc:
-              raise SystemExit("Candidate edition is missing required article structure.")
-          if len(re.findall(r'<a href="https://', doc)) < 4:
-              raise SystemExit("Candidate edition does not contain enough attributed source links.")
-          for path in ("index.html", "archive.html", "editions.html", "feed.xml", "sitemap.xml"):
-              if not (root / path).is_file():
-                  raise SystemExit(f"Missing publication output: {path}")
+              raise SystemExit("Article structure incomplete.")
+          source_links = re.findall(r'<a href="(https://[^"]+)"', doc)
+          if len(source_links) < 4 or len(set(source_links)) < 4:
+              raise SystemExit("Fewer than four distinct HTTPS source links.")
+          for name in ("index.html", "archive.html", "editions.html", "feed.xml", "sitemap.xml"):
+              if not (root / name).is_file():
+                  raise SystemExit(f"Missing publication output: {name}")
           ET.parse(root / "feed.xml")
           ET.parse(root / "sitemap.xml")
-          if edition.name not in (root / "archive.html").read_text(encoding="utf-8"):
-              raise SystemExit("Latest edition missing from archive.")
-          if edition.name not in (root / "editions.html").read_text(encoding="utf-8"):
-              raise SystemExit("Latest edition missing from editions page.")
-          if edition.name not in (root / "index.html").read_text(encoding="utf-8"):
-              raise SystemExit("Homepage does not link to latest edition.")
-          print(f"Candidate {edition.name} and publication indexes passed validation.")
+          for name in ("archive.html", "editions.html", "index.html", "feed.xml", "sitemap.xml"):
+              if edition.name not in (root / name).read_text(encoding="utf-8"):
+                  raise SystemExit(f"{edition.name} missing from {name}")
+          print(f"PASS: {edition.name}; {len(source_links)} source links; homepage, archive, editions, RSS and sitemap.")
           PY
-
-      - name: Publish all validated outputs in one commit
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Test fail-closed behaviour
+        working-directory: ${{ runner.temp }}/mgc-publication-test
+        run: |
+          env -u OPENAI_API_KEY -u MGC_OPENAI_MODEL python3 scripts/generate_cycling_intelligence.py >"$RUNNER_TEMP/mgc-fail-test.log" 2>&1 && exit 1 || true
+          grep -q "Missing OPENAI_API_KEY or MGC_OPENAI_MODEL" "$RUNNER_TEMP/mgc-fail-test.log"
+          echo "PASS: missing credentials stop generation."
+      - name: Upload isolated test edition and publication outputs
+        if: github.ref_name != 'main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: mgc-cycling-intelligence-test
+          path: |
+            ${{ runner.temp }}/mgc-publication-test/20??-??-??.html
+            ${{ runner.temp }}/mgc-publication-test/index.html
+            ${{ runner.temp }}/mgc-publication-test/archive.html
+            ${{ runner.temp }}/mgc-publication-test/editions.html
+            ${{ runner.temp }}/mgc-publication-test/feed.xml
+            ${{ runner.temp }}/mgc-publication-test/sitemap.xml
+          if-no-files-found: error
+      - name: Publish validated outputs to main
+        if: github.ref_name == 'main'
+        working-directory: ${{ runner.temp }}/mgc-publication-test
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
