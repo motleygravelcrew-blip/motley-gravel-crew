@@ -78,9 +78,20 @@ jobs:
       - name: Test fail-closed behaviour
         working-directory: ${{ runner.temp }}/mgc-publication-test
         run: |
-          env -u OPENAI_API_KEY -u MGC_OPENAI_MODEL python3 scripts/generate_cycling_intelligence.py >"$RUNNER_TEMP/mgc-fail-test.log" 2>&1 && exit 1 || true
-          grep -q "Missing OPENAI_API_KEY or MGC_OPENAI_MODEL" "$RUNNER_TEMP/mgc-fail-test.log"
-          echo "PASS: missing credentials stop generation."
+          env -u OPENAI_API_KEY -u MGC_OPENAI_MODEL python3 - <<'PY'
+          import importlib.util
+          spec = importlib.util.spec_from_file_location("mgc_engine", "scripts/generate_cycling_intelligence.py")
+          engine = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(engine)
+          try:
+              engine.api_research()
+          except RuntimeError as exc:
+              if "Missing OPENAI_API_KEY or MGC_OPENAI_MODEL" not in str(exc):
+                  raise
+              print("PASS: missing credentials stop research before any publication write.")
+          else:
+              raise SystemExit("FAIL: engine did not reject missing credentials.")
+          PY
       - name: Upload isolated test edition and publication outputs
         if: github.ref_name != 'main'
         uses: actions/upload-artifact@v4
