@@ -1,37 +1,22 @@
-name: MGC automatic editorial image discovery
+name: MGC editorial image discovery (manual maintenance only)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '20??-??-??.html'
   workflow_dispatch:
 
 permissions:
-  contents: write
-
-concurrency:
-  group: mgc-editorial-images
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  discover-and-publish-images:
+  discover:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out latest edition
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          ref: main
-      - name: Discover, verify and download licensed images
-        run: python3 scripts/discover_editorial_images.py
-      - name: Commit approved image assets and article placements
+          python-version: '3.x'
+      - name: Discover candidates without publishing
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/editorial 20??-??-??.html
-          if git diff --cached --quiet; then
-            echo "No images passed the automated checks; no image changes to publish."
-          else
-            git commit -m "Add automatically verified editorial images"
-            git push origin main
-          fi
+          python3 scripts/discover_editorial_images.py
+          git status --short
+          echo "This legacy workflow is report-only. It cannot commit or deploy image changes."
