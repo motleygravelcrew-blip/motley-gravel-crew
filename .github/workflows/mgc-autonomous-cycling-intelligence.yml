@@ -1,0 +1,87 @@
+name: MGC Autonomous Cycling Intelligence
+
+on:
+  # 22:00 UTC Sunday/Wednesday is 06:00 Monday/Thursday in Perth (AWST).
+  schedule:
+    - cron: '0 22 * * 0,3'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mgc-autonomous-cycling-intelligence
+  cancel-in-progress: false
+
+jobs:
+  research-validate-publish:
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out current publication
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Generate source-backed edition
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          MGC_OPENAI_MODEL: ${{ vars.MGC_OPENAI_MODEL }}
+        run: python3 scripts/generate_cycling_intelligence.py
+
+      - name: Regenerate publication indexes
+        run: python3 scripts/build_publication_index.py
+
+      - name: Validate candidate edition and all publication outputs
+        run: |
+          python3 -m py_compile scripts/generate_cycling_intelligence.py scripts/build_publication_index.py scripts/build_rss_feed.py
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from xml.etree import ElementTree as ET
+          import re
+          root = Path(".")
+          candidates = sorted(root.glob("20??-??-??.html"), reverse=True)
+          if not candidates:
+              raise SystemExit("No dated edition exists.")
+          edition = candidates[0]
+          doc = edition.read_text(encoding="utf-8")
+          if "<title>" not in doc or "<article>" not in doc or "EDITORIAL CHECK" not in doc:
+              raise SystemExit("Candidate edition is missing required article structure.")
+          if len(re.findall(r'<a href="https://', doc)) < 4:
+              raise SystemExit("Candidate edition does not contain enough attributed source links.")
+          for path in ("index.html", "archive.html", "editions.html", "feed.xml", "sitemap.xml"):
+              if not (root / path).is_file():
+                  raise SystemExit(f"Missing publication output: {path}")
+          ET.parse(root / "feed.xml")
+          ET.parse(root / "sitemap.xml")
+          if edition.name not in (root / "archive.html").read_text(encoding="utf-8"):
+              raise SystemExit("Latest edition missing from archive.")
+          if edition.name not in (root / "editions.html").read_text(encoding="utf-8"):
+              raise SystemExit("Latest edition missing from editions page.")
+          if edition.name not in (root / "index.html").read_text(encoding="utf-8"):
+              raise SystemExit("Homepage does not link to latest edition.")
+          print(f"Candidate {edition.name} and publication indexes passed validation.")
+          PY
+
+      - name: Publish all validated outputs in one commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          latest="$(ls -1 20??-??-??.html | sort | tail -n 1)"
+          git add "$latest" index.html archive.html editions.html feed.xml sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No publication changes to commit."
+            exit 1
+          fi
+          git commit -m "Publish MGC Cycling Intelligence — $latest"
+          git push origin HEAD:main
