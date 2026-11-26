@@ -1,0 +1,61 @@
+name: MGC Cycling Intelligence publication pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '20??-??-??.html'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mgc-cycling-intelligence-publication
+  cancel-in-progress: false
+
+jobs:
+  publish-indexes:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out publication source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Discover and verify eligible editorial images
+        run: python3 scripts/discover_editorial_images.py
+      - name: Regenerate archive, editions, homepage, RSS and sitemap
+        run: python3 scripts/build_publication_index.py
+      - name: Validate generated publication files
+        run: |
+          python3 -m py_compile scripts/build_publication_index.py scripts/build_rss_feed.py scripts/discover_editorial_images.py
+          python3 - <<'PY'
+          from pathlib import Path
+          from xml.etree import ElementTree as ET
+          root = Path('.')
+          ET.parse(root / 'feed.xml')
+          ET.parse(root / 'sitemap.xml')
+          editions = sorted(root.glob('20??-??-??.html'), reverse=True)
+          if not editions:
+              raise SystemExit('No dated editions found')
+          for page in ('index.html', 'archive.html', 'editions.html'):
+              if not (root / page).is_file():
+                  raise SystemExit(f'Missing generated page: {page}')
+          print(f'Validated {len(editions)} dated editions and generated XML.')
+          PY
+      - name: Commit generated publication updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html archive.html editions.html feed.xml sitemap.xml assets/editorial 20??-??-??.html
+          if git diff --cached --quiet; then
+            echo "Publication indexes and images are already current."
+          else
+            git commit -m "Update Cycling Intelligence publication indexes"
+            git push origin main
+          fi
