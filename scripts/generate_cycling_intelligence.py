@@ -22,7 +22,7 @@ AWST = ZoneInfo("Australia/Perth")
 MODEL = os.environ.get("MGC_OPENAI_MODEL", "").strip()
 API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
 RESEARCH_DATE = dt.datetime.now(AWST).date()
-EDITION_DATE = dt.date.fromisoformat(os.environ.get("MGC_EDITION_DATE", RESEARCH_DATE.isoformat()))
+EDITION_DATE = dt.date.fromisoformat((os.environ.get("MGC_EDITION_DATE") or RESEARCH_DATE.isoformat()))
 DATE_FILE = ROOT / f"{EDITION_DATE.isoformat()}.html"
 CATEGORIES = ["ROAD", "GRAVEL", "XCO / XCM", "CYCLOCROSS", "TECHNOLOGY", "WESTERN AUSTRALIA"]
 
