@@ -103,14 +103,19 @@ Previous editions for duplicate control:
         detail=exc.read().decode("utf-8","replace")[:2000]
         raise RuntimeError(f"OpenAI Responses API error {exc.code}: {detail}") from exc
     output=[]
+    verified_urls=set()
     for item in response.get("output",[]):
         for part in item.get("content",[]):
-            if part.get("type")=="output_text": output.append(part.get("text",""))
+            if part.get("type")=="output_text":
+                output.append(part.get("text",""))
+                for annotation in part.get("annotations",[]):
+                    if annotation.get("type")=="url_citation" and annotation.get("url"):
+                        verified_urls.add(annotation["url"])
     if not output: raise RuntimeError("Research engine returned no structured output.")
-    try: return json.loads(output[-1])
+    try: return json.loads(output[-1]), verified_urls
     except json.JSONDecodeError as exc: raise RuntimeError("Research engine returned invalid JSON.") from exc
 
-def validate(data):
+def validate(data, verified_urls):
     if not isinstance(data,dict) or not data.get("sections"): raise RuntimeError("No editorial sections returned.")
     all_stories=[]
     for section in data["sections"]:
@@ -122,6 +127,8 @@ def validate(data):
             for source in story["sources"]:
                 if not re.match(r"^https://",source["url"]) or not source["name"].strip():
                     raise RuntimeError(f"Invalid or unattributed source in {story['headline']}")
+                if source["url"] not in verified_urls:
+                    raise RuntimeError(f"Source URL was not present in web-search citations: {source['url']}")
             all_stories.append(story)
     if len(all_stories)<4: raise RuntimeError(f"Only {len(all_stories)} sourced stories; minimum is four. Fail-safe: no publication.")
     headlines=[s["headline"] for s in all_stories]
@@ -150,8 +157,9 @@ def render(data):
 
 def main():
     if DATE_FILE.exists(): raise RuntimeError(f"{DATE_FILE.name} already exists. Refusing to overwrite an edition.")
-    data=api_research()
-    validate(data)
+    data, verified_urls=api_research()
+    if not verified_urls: raise RuntimeError("Web search returned no attributable URL citations.")
+    validate(data, verified_urls)
     DATE_FILE.write_text(render(data),encoding="utf-8")
     print(f"Drafted and validated {DATE_FILE.name} with source-backed stories.")
     print("Images intentionally omitted unless a separate strict image verification stage approves one.")
