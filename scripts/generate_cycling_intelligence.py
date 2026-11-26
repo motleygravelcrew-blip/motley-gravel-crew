@@ -21,8 +21,9 @@ SITE = "https://motleygravelcrew.com"
 AWST = ZoneInfo("Australia/Perth")
 MODEL = os.environ.get("MGC_OPENAI_MODEL", "").strip()
 API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
-TODAY = dt.datetime.now(AWST).date()
-DATE_FILE = ROOT / f"{TODAY.isoformat()}.html"
+RESEARCH_DATE = dt.datetime.now(AWST).date()
+EDITION_DATE = dt.date.fromisoformat(os.environ.get("MGC_EDITION_DATE", RESEARCH_DATE.isoformat()))
+DATE_FILE = ROOT / f"{EDITION_DATE.isoformat()}.html"
 CATEGORIES = ["ROAD", "GRAVEL", "XCO / XCM", "CYCLOCROSS", "TECHNOLOGY", "WESTERN AUSTRALIA"]
 
 SCHEMA = {
@@ -69,7 +70,7 @@ def api_research():
         previous_text.append(f"\n--- {p.name} ---\n" + re.sub(r"\s+", " ", html.unescape(text))[:5000])
     prompt = f"""
 You are the independent editorial desk of Motley Gravel Crew (MGC), a Western Australian cycling community publication.
-Prepare the {TODAY.strftime('%A, %d %B %Y')} Cycling Intelligence edition for publication at 6:00am AWST.
+Prepare the {RESEARCH_DATE.strftime('%A, %d %B %Y')} Cycling Intelligence edition for publication at 6:00am AWST.
 Research current, genuinely material developments available as at today. Use web search extensively across:
 {', '.join(CATEGORIES)}.
 Prioritise primary sources: UCI, AusCycling, event organisers, teams, race timing/results, manufacturers for their own announcements. Use reputable cycling media for context and cross-checking.
@@ -136,8 +137,8 @@ def validate(data, verified_urls):
     return all_stories
 
 def render(data):
-    date_label=TODAY.strftime("%A, %d %B %Y")
-    out=[f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#070912"><title>{html.escape(data['edition_title'])} | Motley Gravel Crew</title><meta name="description" content="{html.escape(data['standfirst'][:250],quote=True)}"><link rel="stylesheet" href="styles.css"><link rel="canonical" href="{SITE}/{TODAY.isoformat()}.html"><link rel="alternate" type="application/rss+xml" title="MGC Cycling Intelligence" href="{SITE}/feed.xml"><style>:root{{color-scheme:dark}}body{{background:#070912;color:#f3f5fb;font-family:Arial,sans-serif;line-height:1.7}}main{{max-width:900px;margin:auto;padding:36px 22px}}article h2{{color:#28e4f0;border-bottom:1px solid #26314b;padding-bottom:8px;margin-top:40px}}article h3{{font-size:1.35rem;margin:22px 0 8px}}article p,article li{{color:#d7dced}}article a{{color:#28e4f0;overflow-wrap:anywhere}}blockquote{{background:#101525;border-left:3px solid #ff39bd;padding:14px 18px}}.mast{{border-bottom:1px solid #26314b;margin-bottom:26px}}.eyebrow{{color:#ff39bd;letter-spacing:.16em;font-weight:bold}}.edition-nav{{display:flex;gap:14px;flex-wrap:wrap}}.edition-nav a{{color:#28e4f0}}</style></head><body><main><nav class="edition-nav"><a href="index.html">MGC HOME</a><a href="editions.html">CYCLING INTELLIGENCE</a><a href="archive.html">ARCHIVE</a><a href="routes.html">MGC ROUTE LIBRARY</a></nav><header class="mast"><p class="eyebrow">MGC / CYCLING INTELLIGENCE</p><h1>{html.escape(data['edition_title'])}</h1><p>{date_label} · Perth, Western Australia</p></header><article><p><strong>{date_label} | Perth, Western Australia</strong><br><em>Road · Gravel · XCO/XCM · Cyclocross · Technology · WA Cycling Community</em></p><blockquote><strong>THE MGC READ</strong><br>{html.escape(data['standfirst'])}</blockquote>"""]
+    date_label=RESEARCH_DATE.strftime("%A, %d %B %Y")
+    out=[f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#070912"><title>{html.escape(data['edition_title'])} | Motley Gravel Crew</title><meta name="description" content="{html.escape(data['standfirst'][:250],quote=True)}"><link rel="stylesheet" href="styles.css"><link rel="canonical" href="{SITE}/{EDITION_DATE.isoformat()}.html"><link rel="alternate" type="application/rss+xml" title="MGC Cycling Intelligence" href="{SITE}/feed.xml"><style>:root{{color-scheme:dark}}body{{background:#070912;color:#f3f5fb;font-family:Arial,sans-serif;line-height:1.7}}main{{max-width:900px;margin:auto;padding:36px 22px}}article h2{{color:#28e4f0;border-bottom:1px solid #26314b;padding-bottom:8px;margin-top:40px}}article h3{{font-size:1.35rem;margin:22px 0 8px}}article p,article li{{color:#d7dced}}article a{{color:#28e4f0;overflow-wrap:anywhere}}blockquote{{background:#101525;border-left:3px solid #ff39bd;padding:14px 18px}}.mast{{border-bottom:1px solid #26314b;margin-bottom:26px}}.eyebrow{{color:#ff39bd;letter-spacing:.16em;font-weight:bold}}.edition-nav{{display:flex;gap:14px;flex-wrap:wrap}}.edition-nav a{{color:#28e4f0}}</style></head><body><main><nav class="edition-nav"><a href="index.html">MGC HOME</a><a href="editions.html">CYCLING INTELLIGENCE</a><a href="archive.html">ARCHIVE</a><a href="routes.html">MGC ROUTE LIBRARY</a></nav><header class="mast"><p class="eyebrow">MGC / CYCLING INTELLIGENCE</p><h1>{html.escape(data['edition_title'])}</h1><p>{date_label} · Perth, Western Australia</p></header><article><p><strong>{date_label} | Perth, Western Australia</strong><br><em>Road · Gravel · XCO/XCM · Cyclocross · Technology · WA Cycling Community</em></p><blockquote><strong>THE MGC READ</strong><br>{html.escape(data['standfirst'])}</blockquote>"""]
     for section in data["sections"]:
         out.append(f"<h2>{html.escape(section['category'])}</h2>")
         if not section["stories"]:
@@ -152,7 +153,7 @@ def render(data):
             out.append("<p><strong>Sources:</strong> "+" · ".join(f'<a href="{html.escape(s["url"],quote=True)}" rel="noopener">{html.escape(s["name"])} ({html.escape(s["source_date"])})</a>' for s in story["sources"])+"</p>")
     out.append("<h2>EDITORIAL CHECK</h2><ul>")
     out.extend(f"<li>{html.escape(x)}</li>" for x in data["editorial_check"])
-    out.append("</ul><p><em>Ride hard. Stay curious. Keep the wheels turning.</em></p><p><strong>MOTLEY GRAVEL CREW</strong><br>One crew. Every ride.</p></article><nav class=\"edition-nav\"><a href=\"index.html\">RETURN TO MGC HOMEPAGE</a><a href=\"archive.html\">VIEW ALL EDITIONS</a></nav></main><footer style=\"text-align:center;padding:24px;color:#aab3c8\">© "+str(TODAY.year)+" Motley Gravel Crew · Western Australia</footer></body></html>")
+    out.append("</ul><p><em>Ride hard. Stay curious. Keep the wheels turning.</em></p><p><strong>MOTLEY GRAVEL CREW</strong><br>One crew. Every ride.</p></article><nav class=\"edition-nav\"><a href=\"index.html\">RETURN TO MGC HOMEPAGE</a><a href=\"archive.html\">VIEW ALL EDITIONS</a></nav></main><footer style=\"text-align:center;padding:24px;color:#aab3c8\">© "+str(EDITION_DATE.year)+" Motley Gravel Crew · Western Australia</footer></body></html>")
     return "\n".join(out)
 
 def main():
