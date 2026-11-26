@@ -91,12 +91,23 @@ def update_home(latest):
     date_label = latest["date"].strftime("%d %B %Y").upper()
     heading = latest["lead"]
     summary = latest["summary"][:240]
-    panel = (f'<div class="feature-panel"><div class="feature-image-wrap"><div class="feature-mark">MGC</div></div><div>'
-             f'<span class="category cyan">{date_label} · LEAD STORY</span>'
+    edition_html = (ROOT / latest["path"]).read_text(encoding="utf-8")
+    image_match = re.search(r'<figure[^>]*class="[^"]*story-feature-image[^"]*"[^>]*>.*?</figure>', edition_html, re.S)
+    image_block = '<div class="feature-image-wrap"><div class="feature-mark">MGC</div></div>'
+    if image_match:
+        src = re.search(r'<img[^>]+src="([^"]+)"', image_match.group(0))
+        alt = re.search(r'<img[^>]+alt="([^"]*)"', image_match.group(0))
+        caption = re.search(r'<figcaption>(.*?)</figcaption>', image_match.group(0), re.S)
+        if src:
+            image_block = (f'<div class="feature-image-wrap"><img class="lead-story-image" src="{src.group(1)}" '
+                           f'alt="{alt.group(1) if alt else heading}">'
+                           f'<small>{caption.group(1) if caption else "Image credit recorded in the edition."}</small></div>')
+    panel = (f'{image_block}<div><span class="category cyan">{date_label} · LEAD STORY</span>'
              f'<h3>{heading}</h3><p>{summary}</p>'
-             f'<a class="text-link" href="{latest["path"]}">READ THE INTELLIGENCE EDITION <span>↗</span></a></div></div>')
-    updated, count = re.subn(r'<div class="feature-panel">.*?</div></div>', lambda _: panel, doc, count=1, flags=re.S)
-    if count != 1: raise RuntimeError("Could not safely locate homepage Cycling Intelligence feature")
+             f'<a class="text-link" href="{latest["path"]}">READ THE INTELLIGENCE EDITION <span>↗</span></a></div>')
+    pattern = r'(<section class="section">.*?<div class="feature-panel">).*?(</section>)'
+    updated, count = re.subn(pattern, lambda m: m.group(1) + panel + m.group(2), doc, count=1, flags=re.S)
+    if count != 1: raise RuntimeError("Could not safely locate homepage Cycling Intelligence feature section")
     path.write_text(updated, encoding="utf-8")
 
 def update_sitemap(items):
