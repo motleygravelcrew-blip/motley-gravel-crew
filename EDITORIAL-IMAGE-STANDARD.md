@@ -3,43 +3,33 @@
 ## Purpose
 Use photography to clarify and strengthen a specific published story. Images are editorial assets, not decoration.
 
-## Selection rules
-- Choose an image that directly depicts the story subject, event, product or location whenever possible.
-- Never imply that an illustrative or archive photograph depicts the specific event or announcement being reported.
-- Do not copy an image from a linked news article merely because the article is cited.
-- A source page, link or public visibility is not permission to republish.
-- Prefer original MGC photography with permission, official press/media assets with explicit reuse permission, or files carrying a verified open licence.
-- Check the individual file's licence and attribution requirements before use. Record the photographer/creator, source page, licence name and licence URL.
-- If the licence or permission cannot be verified, do not publish the image. Run the story without one.
-- Store approved image assets in the repository under `assets/editorial/` so published pages do not depend on third-party hotlinking.
+## Automatic selection and publication
+Cycling Intelligence image discovery is authorised to select and publish suitable images without individual approval, subject to these safeguards:
 
-## Required credit
-Every image must have a visible caption/credit beneath it. Include:
-1. What the image depicts, with any illustrative/archive qualification.
+- Prefer original MGC photography with permission, official media assets with explicit reuse permission, or files carrying a verified open licence.
+- A public image, search result, article image or source link is not permission to republish.
+- Verify the individual file's licence and attribution requirements. Record creator/photographer, source page, licence name and licence URL.
+- Use only licences that permit the intended website use. The current automated allow-list is CC0/Public Domain, CC BY and CC BY-SA; do not infer permission from a missing or ambiguous licence.
+- Require a credible match between the image and the story. Keyword overlap alone is not proof that an image depicts the reported event, person or announcement.
+- Never imply that an illustrative or archive photograph depicts the specific event being reported. Label illustrative/archive images clearly.
+- Store approved image assets in the repository under assets/editorial/ so published pages do not depend on third-party hotlinking.
+- If no image can be confidently verified as relevant and reusable, publish the article without an image.
+
+## Required visible credit
+Every published image must include:
+1. An accurate description of what it depicts, with illustrative/archive qualification where needed.
 2. Photographer or creator.
 3. Source page.
-4. Licence and licence link, or a clear permission acknowledgement.
+4. Licence and licence link, or explicit permission acknowledgement.
+5. A note identifying material edits such as cropping where applicable.
 
-For Creative Commons images, include the licence and indicate if the image has been cropped, edited or otherwise changed. Do not imply endorsement by the creator.
+Do not imply endorsement by the creator.
 
-## Article image markup
-Use this structure and replace all example values with verified details:
+## Technical checks
+Before an image is accepted, check the source metadata, licence, creator, file type, minimum dimensions, download size and file signature. Reject failures. These automated checks reduce risk but do not guarantee legal clearance or factual relevance.
 
-```html
-<figure class="story-feature-image">
-  <img src="assets/editorial/approved-image.jpg" alt="Accurate description of the image">
-  <figcaption>
-    Accurate caption. Photo: <a href="SOURCE_PAGE">Creator / source</a> ·
-    <a href="LICENCE_URL">Licence</a>. Cropped for layout, if applicable.
-  </figcaption>
-</figure>
-```
+## Homepage feature
+The homepage Cycling Intelligence feature must link directly to the latest published dated edition. Its image may only be used if it passes the same image checks. Otherwise retain a neutral text/brand treatment.
 
-## Homepage lead story
-The homepage Cycling Intelligence feature should use the lead story's approved image, a concise factual headline, a short summary, the edition date and a direct link to that dated edition. Keep the MGC logo in the site identity/header/footer; do not replace the brand mark itself.
-
-## Automation and editorial control
-Image discovery may be assisted by the briefing workflow, but image reuse permission must not be inferred automatically. Before publication, a human/editorial check must approve the exact image, source, licence/permission and credit. If no approved image is available by publication time, publish without an image rather than delaying or using an unverified image.
-
-## Current example
-The 22 November 2026 lead-story image is an illustrative professional road-racing peloton photograph by Rz98, sourced from Wikimedia Commons under CC BY-SA 4.0. It is explicitly captioned as illustrative and not as a photograph of the Collective Cycling Group announcement.
+## Operating rule
+No routine individual image approvals are required for scheduled Cycling Intelligence editions. Significant uncertainty must result in no image, not an approval request or an unverified image.
