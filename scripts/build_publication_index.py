@@ -9,7 +9,7 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 SITE = "https://motleygravelcrew.com"
 AWST = timezone(timedelta(hours=8))
-EDITION_RE = re.compile(r"^20\\d{2}-\\d{2}-\\d{2}\\.html$")
+EDITION_RE = re.compile(r"^20\d{2}-\d{2}-\d{2}\.html$")
 
 class EditionParser(HTMLParser):
     def __init__(self):
@@ -104,7 +104,7 @@ def update_home(latest):
                            f'<small>{caption.group(1) if caption else "Image credit recorded in the edition."}</small></div>')
     panel = (f'{image_block}<div><span class="category cyan">{date_label} · LEAD STORY</span>'
              f'<h3>{heading}</h3><p>{summary}</p>'
-             f'<a class="text-link" href="{latest["path"]}">READ THE INTELLIGENCE EDITION <span>↗</span></a></div>')
+             f'<a class="text-link" href="{latest["path"]}">READ THE INTELLIGENCE EDITION <span>↗</span></a></div></div>')
     pattern = r'(<section class="section">.*?<div class="feature-panel">).*?(</section>)'
     updated, count = re.subn(pattern, lambda m: m.group(1) + panel + m.group(2), doc, count=1, flags=re.S)
     if count != 1: raise RuntimeError("Could not safely locate homepage Cycling Intelligence feature section")
@@ -117,7 +117,7 @@ def update_sitemap(items):
     existing = re.findall(r'<url>.*?</url>', doc, re.S)
     by_loc = {}
     for block in existing:
-        m = re.search(r"<loc>https://motleygravelcrew\\.com/([^<]*)</loc>", block)
+        m = re.search(r"<loc>https://motleygravelcrew\.com/([^<]*)</loc>", block)
         if m: by_loc[m.group(1)] = block
     today = date.today().isoformat()
     for name in core:
