@@ -72,3 +72,95 @@ figure.story-feature-image{width:100%!important;max-width:100%!important;overflo
 figure.story-feature-image>img{display:block!important;position:static!important;float:none!important;width:100%!important;min-width:0!important;max-width:100%!important;height:300px!important;max-height:300px!important;object-fit:contain!important}
 figure.story-feature-image>figcaption{font-size:10px!important;line-height:1.4!important;color:#77839a!important;opacity:.72!important;margin-top:6px!important}
 @media(max-width:720px){section.section .feature-panel{grid-template-columns:minmax(0,1fr)!important}section.section .feature-panel>.feature-image-wrap>img.lead-story-image{height:190px!important;max-height:190px!important}figure.story-feature-image>img{height:210px!important;max-height:210px!important}}
+
+
+/* =========================================================
+   MGC APPROVED BRAND SYSTEM — SITE-WIDE AESTHETIC ONLY
+   Palette and logo artwork are fixed. No content or link edits.
+   ========================================================= */
+:root{
+  --bg:#0b1226;
+  --panel:#111b32;
+  --cyan:#00e5ff;
+  --blue:#007bff;
+  --purple:#8a00ff;
+  --magenta:#ff00d6;
+  --white:#ffffff;
+  --muted:#9aa4b2;
+  --line:rgba(233,238,245,.16);
+  --grad:linear-gradient(105deg,#00e5ff 0%,#007bff 42%,#8a00ff 72%,#ff00d6 100%);
+}
+html{background:#0b1226}
+body{background:#0b1226;color:#fff}
+a{transition:color .18s ease,border-color .18s ease,background-color .18s ease}
+.topline{background:#050a16;color:#9aa4b2;border-bottom:1px solid rgba(0,229,255,.3)}
+.site-header{background:rgba(5,10,22,.98);border-bottom:1px solid rgba(0,229,255,.28);backdrop-filter:none}
+.brand-logo{width:54px;height:54px;object-fit:contain}
+.brand-name{font:800 italic 19px/1 'Barlow Condensed',sans-serif;letter-spacing:.8px;color:#fff}
+.brand-name b{font:800 italic 11px Inter,sans-serif;letter-spacing:6px;color:#00e5ff}
+.nav{gap:clamp(10px,1.65vw,25px)}
+.nav a,.social-mini a{font:700 11px 'Barlow Condensed',sans-serif;letter-spacing:1.35px;color:#e9eef5}
+.nav a:hover,.nav a.active{color:#00e5ff}
+.nav a.active:after{content:"";display:block;height:3px;margin-top:7px;background:var(--grad)}
+.menu-toggle{color:#fff}
+.hero{background:#0b1226;border-bottom:1px solid #00e5ff}
+.hero>img{display:block;width:100%;height:auto;object-fit:cover}
+.hero-overlay{background:linear-gradient(90deg,rgba(11,18,38,.96),rgba(11,18,38,.78) 58%,rgba(11,18,38,.35))}
+.ticker{background:#111d33;color:#e9eef5;border-block:1px solid rgba(0,229,255,.45);font:800 15px 'Barlow Condensed',sans-serif;letter-spacing:3.5px;padding:17px 5vw}
+.ticker i{color:#ff00d6;padding:0 clamp(8px,1.6vw,22px)}
+.section{background:#0b1226}
+.section-alt{background:#111b32;border-color:var(--line)}
+.section-heading{margin-bottom:32px}
+.eyebrow,.date-stamp{color:#9aa4b2}
+.section h2,.page-title,.hero h1{font-family:'Barlow Condensed',Impact,sans-serif;font-weight:900;letter-spacing:.15px}
+.gradient-text,.hero h1 em{background:var(--grad);color:transparent;background-clip:text;-webkit-background-clip:text}
+.feature-panel,.route-callout,.route-feature,.strava-club-widget,.subscribe-form{
+  background:#fff;color:#0b1226;border:1px solid #e9eef5;border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.12)
+}
+.feature-panel p,.route-callout p{color:#344054}
+.feature-panel h3,.route-callout h2{color:#0b1226}
+.feature-mark{background:none;color:#0b1226}
+.tile,.edition-item,.about-grid article,.schedule>div,.calendar-legend,.event{
+  background:#111b32;color:#fff;border:1px solid rgba(233,238,245,.18);border-radius:10px;box-shadow:none
+}
+.tile:hover,.edition-item:hover{border-color:#00e5ff;box-shadow:0 8px 20px rgba(0,0,0,.18);transform:translateY(-2px)}
+.tile strong,.edition-item strong,.event h3{color:#fff}
+.tile small,.edition-item small,.event p,.about-grid p{color:#c3cad5}
+.tile>b,.tile span,.text-link,.event time,.event a,.category.cyan{color:#00bfe8}
+.button{border-radius:5px;font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:1.4px}
+.button-gradient{background:var(--grad);color:#fff;border:0}
+.button-outline{background:transparent;color:#fff;border:1px solid rgba(0,229,255,.75)}
+.subscribe-section,.group-rides-section{background:#111b32;border-color:rgba(0,229,255,.25)}
+.subscribe-copy>p:last-child,.subscribe-form small,.group-rides-copy p:not(.eyebrow){color:#c3cad5}
+.subscribe-form{background:#fff;color:#0b1226}
+.subscribe-form label{color:#007bff}
+.subscribe-controls input{background:#f5f7fa;color:#0b1226;border:1px solid #cbd2dc;border-radius:4px}
+.subscribe-controls input::placeholder{color:#667085}
+.strava-widget-heading a{color:#007bff}
+.community-call{background:linear-gradient(120deg,#0b1226 0%,#111b32 100%)}
+.community-emblem small{color:#e9eef5}
+.footer{background:#050a16;border-top:1px solid rgba(0,229,255,.3)}
+.footer-brand b{color:#fff}
+.footer-links a{color:#c3cad5}
+.footer-links a:hover,.footer p a{color:#00e5ff}
+.page-main{color:#fff}
+.page-intro,.muted-note,.section-intro{color:#c3cad5}
+.subheading,.route-callout h2,.about-grid h2{color:#fff}
+.empty-routes{background:#111b32;border-color:rgba(0,229,255,.5)}
+.empty-routes span{color:#00e5ff}
+.status{border-radius:3px}
+.source-links a{border-color:rgba(0,229,255,.35);color:#00e5ff;border-radius:4px}
+.story-card{background:#fff;color:#0b1226;border-color:#e9eef5;border-radius:10px}
+.story-card-body h3{color:#0b1226}
+.story-card-body p{color:#344054}
+.image-credit{color:#9aa4b2}
+.image-credit a,.story-feature-image figcaption a{color:#007bff}
+.story-feature-image img,.edition-thumb,.lead-story-image{border-color:rgba(0,229,255,.25)}
+@media(max-width:720px){
+ .site-header{background:#050a16}
+ .nav{background:#050a16;border-bottom:1px solid rgba(0,229,255,.3)}
+ .brand-logo{width:46px;height:46px}
+ .brand-name{font-size:16px}
+ .ticker{font-size:13px;letter-spacing:2px;line-height:1.9}
+ .feature-panel{background:#fff}
+}
