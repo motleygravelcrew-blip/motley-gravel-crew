@@ -282,3 +282,26 @@ body{background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif}
  .subscribe-controls{flex-direction:column}
  .subscribe-controls button{width:100%}
 }
+
+
+/* Shared MGC site architecture: discipline strip + branded page mastheads */
+.site-discipline-nav{display:flex;align-items:center;justify-content:center;gap:clamp(5px,1.15vw,18px);min-height:56px;padding:12px 3vw;white-space:normal}
+.site-discipline-nav i{display:inline-block;padding:0 3px;color:#ff00d6;font-size:18px;line-height:1}
+.page-main{position:relative;isolation:isolate;max-width:none;padding:64px max(6vw,calc((100vw - 1120px)/2)) 100px;overflow:hidden}
+.page-main:before{content:"";position:absolute;z-index:-2;inset:0 0 auto;height:360px;background:url("assets/mgc-hero-banner.jpg") center 43%/cover no-repeat}
+.page-main:after{content:"";position:absolute;z-index:-1;inset:0 0 auto;height:360px;background:linear-gradient(90deg,rgba(5,10,25,.97),rgba(5,10,25,.84) 58%,rgba(5,10,25,.62)),linear-gradient(0deg,#0b1226 0%,rgba(11,18,38,.08) 70%)}
+.page-main>.eyebrow:first-child{margin-top:6px;color:#00e5ff}
+.page-main>.page-title:first-of-type{max-width:950px;text-shadow:0 3px 18px rgba(0,0,0,.3)}
+.page-main>.page-intro:first-of-type{max-width:800px;color:#e0e7f2}
+.page-main>*{position:relative}
+.page-main>.subheading{margin-top:42px}
+.page-main .edition-list,.page-main .event-list,.page-main .source-links,.page-main .route-feature{position:relative}
+.hero{min-height:0}
+.hero>img{width:100%;height:auto;max-height:510px;object-fit:cover;object-position:center}
+@media(max-width:720px){
+ .site-discipline-nav{gap:5px 9px;min-height:48px;padding:10px 3vw;font-size:11px;letter-spacing:1.5px}
+ .site-discipline-nav i{font-size:14px;padding:0}
+ .page-main{padding:48px 7vw 72px}
+ .page-main:before,.page-main:after{height:310px}
+ .hero>img{height:auto;max-height:none;object-fit:contain}
+}
