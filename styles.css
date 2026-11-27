@@ -164,3 +164,121 @@ a{transition:color .18s ease,border-color .18s ease,background-color .18s ease}
  .ticker{font-size:13px;letter-spacing:2px;line-height:1.9}
  .feature-panel{background:#fff}
 }
+
+
+/* =========================================================
+   MGC FULL-SITE VISUAL REFRESH — MASTER HOMEPAGE REFERENCE
+   Presentation only: preserve all existing content, URLs,
+   navigation, forms, embeds, metadata and page structure.
+   ========================================================= */
+:root{
+  --bg:#0b1226;--panel:#111b32;--cyan:#00e5ff;--blue:#007bff;
+  --purple:#8a00ff;--magenta:#ff00d6;--white:#fff;
+  --muted:#c3cad5;--line:rgba(233,238,245,.2);
+  --grad:linear-gradient(105deg,#00e5ff 0%,#007bff 42%,#8a00ff 72%,#ff00d6 100%);
+}
+html{background:var(--bg);scroll-padding-top:92px}
+body{background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif}
+.topline{background:#050a16;color:#9aa4b2;border-bottom:1px solid rgba(0,229,255,.24)}
+.site-header{min-height:76px;background:rgba(5,10,22,.98);border-bottom:1px solid rgba(0,229,255,.28);backdrop-filter:none}
+.brand{gap:14px}
+.brand-logo{width:54px;height:54px;object-fit:contain}
+.brand-name{font:900 italic 19px/1 'Barlow Condensed',Impact,sans-serif;letter-spacing:.7px;color:#fff}
+.brand-name b{display:block;margin-top:4px;font:800 11px/1 Inter,sans-serif;letter-spacing:7px;color:#00e5ff}
+.nav{gap:clamp(10px,1.5vw,23px)}
+.nav a,.social-mini a{font:800 11px 'Barlow Condensed',Impact,sans-serif;letter-spacing:1.15px;color:#e9eef5;white-space:nowrap}
+.nav a:hover,.nav a.active,.footer-links a:hover{color:#00e5ff}
+.nav a.active:after{content:"";display:block;height:3px;margin-top:7px;background:var(--grad)}
+.menu-toggle{color:#fff}
+.hero{background:#0b1226;border-bottom:1px solid rgba(0,229,255,.4)}
+.hero>img{display:block;width:100%;height:auto;max-height:none;object-fit:cover;object-position:center}
+.hero-overlay{background:linear-gradient(90deg,rgba(11,18,38,.96),rgba(11,18,38,.78) 58%,rgba(11,18,38,.35))}
+.ticker{padding:15px 4vw;background:#111d33;color:#e9eef5;border-block:1px solid rgba(0,229,255,.3);font:900 clamp(11px,1.2vw,16px) 'Barlow Condensed',Impact,sans-serif;letter-spacing:3px;white-space:normal}
+.ticker i{font-style:normal;color:#ff00d6;padding:0 clamp(7px,1.5vw,20px)}
+.section{background:var(--bg);padding:66px 6vw}
+.section-alt{background:#111b32;border-block:1px solid var(--line)}
+.section-heading{margin-bottom:28px}
+.eyebrow,.date-stamp{color:#aab5c7}
+.section h2,.page-title,.hero h1,.subheading{font-family:'Barlow Condensed',Impact,sans-serif;font-weight:900;letter-spacing:.2px}
+.section h2{font-size:clamp(38px,4.8vw,62px)}
+.gradient-text,.hero h1 em{background:var(--grad);color:transparent;background-clip:text;-webkit-background-clip:text}
+.button{border-radius:4px;font:800 12px 'Barlow Condensed',Impact,sans-serif;letter-spacing:1.35px}
+.button-gradient{background:var(--grad);color:#fff;border:0}
+.button-outline{background:transparent;color:#fff;border:1px solid rgba(0,229,255,.75)}
+.button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.feature-panel{background:#fff;color:#0b1226;border:1px solid #e9eef5;border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.14)}
+.feature-panel h3{color:#0b1226;font:900 clamp(25px,3vw,38px)/1.03 'Barlow Condensed',Impact,sans-serif}
+.feature-panel p{color:#344054}
+.feature-mark{background:none;color:#0b1226}
+.category.cyan,.text-link{color:#007bff}
+.tile-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tile{position:relative;min-height:170px;padding:22px 22px 24px;background:#fff;color:#0b1226;border:1px solid #e9eef5;border-radius:10px;box-shadow:0 8px 22px rgba(0,0,0,.12);overflow:hidden}
+.tile:after{content:"";position:absolute;right:-20px;bottom:-34px;width:118px;height:145px;transform:skew(-35deg);border-left:9px solid #00e5ff;border-right:9px solid #007bff;opacity:.95;pointer-events:none}
+.tile:hover{border-color:#00e5ff;transform:translateY(-2px);box-shadow:0 12px 25px rgba(0,0,0,.17)}
+.tile>b{color:#007bff;font:900 11px 'Barlow Condensed',sans-serif}
+.tile strong{position:relative;z-index:1;color:#0b1226;font:900 26px/1.02 'Barlow Condensed',Impact,sans-serif}
+.tile small{position:relative;z-index:1;max-width:85%;color:#344054;font-size:11px}
+.tile span{position:relative;z-index:1;margin-top:auto;color:#0b1226;font:900 10px 'Barlow Condensed',sans-serif;letter-spacing:1.2px}
+.tile:nth-child(3n):after{border-left-color:#8a00ff;border-right-color:#ff00d6}
+.edition-item,.about-grid article,.schedule>div,.calendar-legend,.event{background:#111b32;color:#fff;border:1px solid rgba(233,238,245,.18);border-radius:8px;box-shadow:none}
+.edition-item strong,.event h3{color:#fff}
+.edition-item small,.tile small,.event p,.about-grid p{color:#c3cad5}
+.edition-item:hover{border-color:#00e5ff;transform:translateY(-2px)}
+.community-call{background:linear-gradient(120deg,#0b1226 0%,#111b32 100%)}
+.community-emblem small{color:#e9eef5}
+.subscribe-section,.group-rides-section{background:#111b32;border-block:1px solid rgba(0,229,255,.24)}
+.subscribe-copy>p:last-child,.group-rides-copy p:not(.eyebrow){color:#c3cad5}
+.subscribe-form,.route-callout,.route-feature,.strava-club-widget{background:#fff;color:#0b1226;border:1px solid #e9eef5;border-radius:10px;box-shadow:0 9px 24px rgba(0,0,0,.12)}
+.subscribe-form label{color:#007bff}
+.subscribe-form small{color:#667085}
+.subscribe-controls input{background:#f5f7fa;color:#0b1226;border:1px solid #cbd2dc;border-radius:4px}
+.subscribe-controls input::placeholder{color:#667085}
+.strava-widget-heading a{color:#007bff}
+.route-callout h2,.about-grid h2{color:#0b1226}
+.route-callout p,.about-grid p{color:#344054}
+.route-icon{color:#007bff}
+.empty-routes{background:#111b32;border-color:rgba(0,229,255,.5)}
+.empty-routes span{color:#00e5ff}
+.event time,.event a,.source-links a{color:#00e5ff}
+.source-links a{border-color:rgba(0,229,255,.35);border-radius:4px}
+.status{border-radius:3px}
+.story-card{background:#fff;color:#0b1226;border-color:#e9eef5;border-radius:10px}
+.story-card-body h3{color:#0b1226}
+.story-card-body p{color:#344054}
+.image-credit{color:#9aa4b2}
+.image-credit a,.story-feature-image figcaption a{color:#007bff}
+.feature-image-wrap>small,.story-feature-image figcaption{color:#9aa4b2}
+.footer{background:#050a16;border-top:1px solid rgba(0,229,255,.28)}
+.footer-brand b{color:#fff}
+.footer-links a{color:#c3cad5}
+.footer-links a:hover,.footer p a{color:#00e5ff}
+.page-main{color:#fff}
+.page-intro,.muted-note,.section-intro{color:#c3cad5}
+.subheading{color:#fff}
+@media(max-width:1000px){.nav{gap:10px}.nav a{font-size:10px}.social-mini{display:none}}
+@media(max-width:900px){.tile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){
+ .topline{justify-content:center}
+ .site-header{min-height:68px;background:#050a16}
+ .brand-logo{width:46px;height:46px}
+ .brand-name{font-size:16px}
+ .menu-toggle{display:block}
+ .nav{display:none;position:absolute;top:68px;left:0;right:0;background:#050a16;padding:22px 7vw;flex-direction:column;gap:20px;border-bottom:1px solid rgba(0,229,255,.3)}
+ .nav.open{display:flex}
+ .nav a{font-size:12px}
+ .hero>img{height:auto;object-fit:contain}
+ .ticker{font-size:12px;letter-spacing:2px;line-height:2}
+ .section{padding:52px 7vw}
+ .section-heading{align-items:flex-start;flex-direction:column;gap:12px}
+ .feature-panel,.community-call,.subscribe-section,.group-rides-section{grid-template-columns:1fr}
+ .feature-mark{min-height:130px}
+ .tile-grid,.edition-list,.about-grid{grid-template-columns:1fr}
+ .tile{min-height:150px}
+ .page-main{padding:52px 7vw 72px}
+ .route-callout{grid-template-columns:1fr}
+ .route-icon{display:none}
+ .footer{padding:25px 7vw}
+ .footer-links{gap:12px}
+ .subscribe-controls{flex-direction:column}
+ .subscribe-controls button{width:100%}
+}
