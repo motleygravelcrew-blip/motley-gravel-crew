@@ -305,3 +305,21 @@ input:focus,select:focus,textarea:focus{outline:2px solid rgba(0,123,255,.25);bo
 .community-emblem img{width:180px;height:180px;object-fit:contain}
 @media(max-width:900px){.tile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.feature-panel{grid-template-columns:1fr;gap:10px;padding:20px}.feature-mark{min-height:120px}.feature-mark img{width:125px;max-height:125px}.tile-grid{grid-template-columns:1fr}.tile{min-height:150px}}
+
+
+/* MGC editorial readability fix — contrast only */
+body>main>article{color:#26354d}
+body>main>article>p{color:#33415a!important}
+body>main>article>p strong{color:#0b1226!important}
+body>main>article blockquote{
+  background:#eaf4fb!important;
+  border-left:4px solid #007bff!important;
+  color:#26354d!important;
+  border-radius:0 10px 10px 0;
+}
+body>main>article blockquote p{color:#26354d!important}
+body>main>article blockquote strong{color:#0b1226!important}
+body>main>article ul,body>main>article ol{color:#33415a!important}
+body>main>article li{color:#33415a!important}
+body>main>article li strong{color:#0b1226!important}
+body>main>article li::marker{color:#007bff}
