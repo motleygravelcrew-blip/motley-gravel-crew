@@ -420,3 +420,95 @@ body>main>article li::marker{color:#007bff}
  .links-page .link-event-card:after{grid-row:5;justify-self:start}
  .links-page .link-event-card a{grid-row:4}
 }
+
+
+/* =========================================================
+   MGC EDITORIAL DESIGN SYSTEM — LIGHT CONTENT / NAVY COMPONENTS
+   Shared visual language; layouts remain specific to each job.
+   ========================================================= */
+body.editorial-light{
+  background:#f5f7fb!important;
+  color:#101828!important;
+}
+.editorial-light .topline{background:#080f22;color:#c7d2e4}
+.editorial-light .site-header{background:rgba(8,15,34,.98);border-bottom:1px solid rgba(0,212,245,.34)}
+.editorial-light .page-main{background:transparent;color:#101828;padding-top:46px}
+.editorial-light .eyebrow{color:#087f9d}
+.editorial-light .page-title{color:#101828}
+.editorial-light .page-intro{color:#475467;max-width:1000px}
+.editorial-light .subheading{color:#101828;font:900 clamp(26px,3vw,36px)/1.08 'Barlow Condensed',sans-serif;letter-spacing:.3px}
+.editorial-light .section-intro{color:#667085}
+.editorial-light .calendar-legend{
+  background:#fff;color:#344054;border:1px solid #d9e0e9;
+  border-radius:14px;box-shadow:0 2px 8px rgba(16,24,40,.035)
+}
+.editorial-light .schedule>div{
+  background:#101d35;border:1px solid #293a57;border-radius:12px;
+  box-shadow:0 5px 18px rgba(16,24,40,.08)
+}
+.editorial-light .schedule b{color:#20c5dc}
+.editorial-light .schedule span{color:#c4cede}
+.editorial-light .edition-item{
+  background:#101d35;color:#f8fafc;border:1px solid #293a57;
+  border-radius:13px;box-shadow:0 5px 18px rgba(16,24,40,.07)
+}
+.editorial-light .edition-item strong{color:#fff}
+.editorial-light .edition-item small{color:#c5cfdf}
+.editorial-light .edition-item .category{color:#b99aff}
+.editorial-light .edition-item .category.cyan{color:#31d5e9}
+.editorial-light .edition-item>b{color:#31d5e9}
+.editorial-light .edition-item:hover{border-color:#20c5dc;box-shadow:0 10px 24px rgba(16,24,40,.12)}
+.editorial-light .event{
+  background:#101d35;border:1px solid #293a57;border-radius:12px;
+  box-shadow:0 4px 14px rgba(16,24,40,.06);padding:22px 27px
+}
+.editorial-light .event time{color:#27c8df;font:800 19px 'Barlow Condensed',sans-serif}
+.editorial-light .event h3{color:#fff;font:800 clamp(21px,2.2vw,27px)/1.15 Inter,Arial,sans-serif}
+.editorial-light .event p{color:#c5cfdf}
+.editorial-light .event .tag{color:#b99aff}
+.editorial-light .event a{color:#27c8df}
+.editorial-light .status{color:#91e4d0;border-color:rgba(80,220,170,.35);background:rgba(80,220,170,.07)}
+.editorial-light .status.tbc{color:#f1cd85;border-color:rgba(220,170,80,.35);background:rgba(220,170,80,.07)}
+.editorial-light .links-page .subheading{color:#101828}
+.editorial-light .links-page .link-event-card{
+  background:#101d35;color:#fff;border:1px solid #293a57;
+  border-radius:12px;box-shadow:0 4px 14px rgba(16,24,40,.06)
+}
+.editorial-light .links-page .link-event-card h3{color:#fff}
+.editorial-light .links-page .link-event-card p{color:#c5cfdf}
+.editorial-light .links-page .link-event-card .tag{color:#b99aff}
+.editorial-light .links-page .link-event-card a{color:#27c8df}
+.editorial-light .links-page .link-event-card:after{color:#8fe8f1;border-color:rgba(39,200,223,.4);background:rgba(39,200,223,.07)}
+.editorial-light .links-page .link-event-card:hover{border-color:#27c8df}
+.editorial-light .muted-note{color:#667085}
+.editorial-light .footer{background:#080f22;color:#c5cfdf;border-top:1px solid rgba(0,212,245,.2)}
+.editorial-light .footer-links a{color:#c5cfdf}
+.editorial-light .footer p{color:#98a6bd;border-color:rgba(166,190,230,.18)}
+/* MGC News: announcement and feature blocks retain a distinct editorial layout */
+.editorial-light .mgc-news-page .news-feature,
+.editorial-light .mgc-news-page .news-section,
+.editorial-light .mgc-news-page .news-contact{
+  background:#101d35;color:#f8fafc;border:1px solid #293a57;
+  border-radius:14px;box-shadow:0 5px 18px rgba(16,24,40,.06)
+}
+.editorial-light .mgc-news-page .news-feature h2,
+.editorial-light .mgc-news-page .news-section h2,
+.editorial-light .mgc-news-page .news-contact h2,
+.editorial-light .mgc-news-page .news-section h3,
+.editorial-light .mgc-news-page .news-contact h3{color:#fff}
+.editorial-light .mgc-news-page .news-feature p,
+.editorial-light .mgc-news-page .news-section p,
+.editorial-light .mgc-news-page .news-contact p{color:#c5cfdf}
+.editorial-light .mgc-news-page .news-kicker,
+.editorial-light .mgc-news-page .news-status{color:#31d5e9}
+.editorial-light .mgc-news-page .news-placeholder-note{color:#d3dbea}
+.editorial-light .mgc-news-page .news-announcement-space{
+  background:#14233d;border:1px solid #344766;border-radius:12px;color:#fff
+}
+.editorial-light .mgc-news-page .news-announcement-space p{color:#c5cfdf}
+.editorial-light .mgc-news-page .news-contact-actions span{color:#c5cfdf}
+@media(max-width:760px){
+  .editorial-light .page-main{padding:34px 18px 64px}
+  .editorial-light .event{padding:19px}
+  .editorial-light .links-page .link-event-card{padding:19px}
+}
