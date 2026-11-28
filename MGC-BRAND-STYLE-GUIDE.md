@@ -48,3 +48,11 @@ Use navy and white as the structural colours. The cyan-to-blue-to-violet-to-mage
 - Do not change existing content, page purpose, wording, links, URL destinations, forms, embeds, scripts, navigation destinations or functionality.
 - Do not introduce Team or rider-development messaging at this stage.
 - Do not redesign or alter the approved logo or hero artwork.
+
+
+## MGC News page
+- Dedicated page: `news.html`, linked in the primary navigation and footer.
+- Content areas: upcoming rides, MGC jersey development and prototype feedback, general crew announcements, and website/community feedback and enquiries.
+- Keep ride details and announcements factual and current. Only publish confirmed dates, locations and event information.
+- Prototype image spaces are placeholders until approved jersey artwork is supplied.
+- Feedback and enquiry actions use the MGC email address `motleygravelcrew@gmail.com`.
