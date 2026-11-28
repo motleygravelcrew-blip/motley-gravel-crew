@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
+    <item>
+      <title>MGC Cycling Intelligence — Saturday Special Edition — 28 November 2026</title>
+      <link>https://motleygravelcrew.com/2026-11-28.html</link>
+      <guid isPermaLink="true">https://motleygravelcrew.com/2026-11-28.html</guid>
+      <pubDate>Sat, 28 Nov 2026 22:55:00 +0800</pubDate>
+      <description><![CDATA[Saturday special edition: AusCycling's 2027 gravel calendar, Western Australian gravel dates, the UCI Cyclo-cross World Cup opener in Ostrava and Wout van Aert's planned return.]]></description>
+      <category>Cycling</category>
+      <category>Gravel</category>
+      <category>Cyclocross</category>
+      <category>Western Australia</category>
+    </item>
     <title>MGC Cycling Intelligence — Motley Gravel Crew</title>
     <link>https://motleygravelcrew.com/</link>
     <description>Independent cycling journalism covering gravel, road, XCO/XCM, technology and the Western Australian cycling community.</description>
